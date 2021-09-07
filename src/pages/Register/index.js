@@ -409,8 +409,7 @@ export const Register = () => {
           </Row>
           
      
-              <button type="submit">Enviar</button>
-              {FormSend && <p className="exito">Formulario enviado con exito</p>}
+            
            </Form>
 
           )}
