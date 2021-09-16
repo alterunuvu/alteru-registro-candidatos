@@ -190,5 +190,5 @@ const UserResults = ({ users, ...rest }) => {
     users: PropTypes.array.isRequired
 };
   
-export default UserResults;
+  export default UserResults;
   

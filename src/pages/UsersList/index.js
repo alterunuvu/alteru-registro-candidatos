@@ -1,7 +1,7 @@
 import { Box, Container } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { firebaseBuscar } from '../../utils/firebase';
+import { firebaseGetUsers } from '../../utils/firebase';
 import UserListToolbar from '../../GetDataFirebase/UserListToolbar';
 import UserResults from '../../GetDataFirebase/UserResults';
 
@@ -11,11 +11,11 @@ export const Leads = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    buscarUsers();
+    GetUsers();
   }, []);
 
-  const buscarUsers = async () => {
-    let resultado = await firebaseBuscar('users');
+  const GetUsers = async () => {
+    let resultado = await firebaseGetUsers('users');
     setUsers(resultado);
   }
 

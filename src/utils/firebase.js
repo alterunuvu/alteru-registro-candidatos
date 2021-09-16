@@ -64,7 +64,7 @@ import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { collection, getDocFromCache, doc, getDocs, getFirestore, setDoc } from "firebase/firestore";
-import { uuid } from 'uuidv4';
+
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -103,9 +103,9 @@ export async function firebaseIniciarSesion(email, password) {
 }
 export default firebaseIniciarSesion;
 
-export async function firebaseBuscar(coleccionABuscar) {
+export async function firebaseGetUsers(collectionGetUsers) {
   const listado = [];
-  const consulta = collection(getFirestore(), coleccionABuscar);
+  const consulta = collection(getFirestore(), collectionGetUsers);
   const resultado = await getDocs(consulta);
   resultado.forEach(documento => {
     const objeto = documento.data();
@@ -115,14 +115,10 @@ export async function firebaseBuscar(coleccionABuscar) {
   return listado;
 }
 
-export function firebaseCrear(coleccion, objeto) {
-  objeto.id = uuid();
-  const referencia = doc(getFirestore(), coleccion, objeto.id);
-  setDoc(referencia, objeto);
-}
 
-export  function DocFromCache(coleccion, id) {
-   getDocFromCache(doc(getFirestore(), coleccion, id));
+
+export async function DocFromCache(coleccion, id) {
+  await getDocFromCache(doc(getFirestore(), coleccion, id));
 }
 
 
