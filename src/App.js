@@ -1,22 +1,37 @@
 import Navbar from './components/Navbar/index';
-import {Register} from './pages/Register/index';
-import {Homepages} from './pages/Homepages/index';
+import {FormSignup} from './pages/FormSignup/index';
+import {Admin} from './pages/Login/index';
+import { Leads } from './pages/UsersList'; 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import './App.css';
+import { SignUp } from './pages/Signup';
+import { UserView} from './pages/UserView/index';
+
+//import { DataTable } from './pages/DataTable';
 
 function App() {
   return (
     <div className="App">
-      <Router>
+       <Router>
         <Navbar/>  
-        <div className="pages">
+        
+        <div>
         <Switch>                 
-           <Route exact  path="/Homepages" component={Homepages}>
-            <Homepages/>
+           <Route exact  path="/" component={Admin}>
+            <Admin/>
+           </Route>
+           <Route exact  path="/SignUp" component={SignUp}>
+            <SignUp/>
+           </Route>               
+              <Route path="/FormSignup" component={FormSignup}>
+            <FormSignup/>
           </Route> 
-          <Route path="/register" component={Register}>
-            <Register/>
-          </Route> 
+          <Route exact  path="/Leads" component={Leads}>
+            <Leads/>
+           </Route>
+           <Route exact  path="/UserView" component={UserView}>
+            <UserView/>
+           </Route>
         </Switch>
         </div>          
            

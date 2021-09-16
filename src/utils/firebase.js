@@ -1,16 +1,130 @@
-import { initializeApp } from "firebase/app"
-import { getFirestore } from "firebase/firestore"
+//import { initializeApp } from "firebase/app";
+//import { getAuth, onAuthStateChanged} from "firebase/auth";
+//import { getFirestore, collection, getDocs} from "firebase/firestore/lite";
+//
+//
+//
+//
+//const firebaseApp = initializeApp({
+//  apiKey: "AIzaSyCsYlP2yma4hXdxhowxmQTEtvobsr2NS_k",
+//  authDomain: "form-alteru.firebaseapp.com",
+//  databaseURL: "https://form-alteru-default-rtdb.firebaseio.com",
+//  projectId: "form-alteru",
+//  storageBucket: "form-alteru.appspot.com",
+//  messagingSenderId: "707297274773",
+//  appId: "1:707297274773:web:71022a5b626c03b857649c"
+//
+//});
+//
+//export const auth = getAuth();
+//onAuthStateChanged(auth, user => { if (user  == null){
+//  console.log('logged in!');
+//
+//} else{
+//  console.log('no user');
+//}
+//});
+//
+//export const db = getFirestore(firebaseApp);
+
+//db.collection('todos').getDocs();
+//const todosCol = collection(db, 'users');
+//export const snapshot = await getDocs(todosCol);
 
 
+
+//import { initializeApp } from "firebase/app";
+//import { getAuth, onAuthStateChanged, getRedirectResult} from "firebase/auth";
+//import { getFirestore } from "firebase/firestore";
+//
+//
+//
+//const firebaseApp = initializeApp({
+//    
+//  apiKey: "AIzaSyCsYlP2yma4hXdxhowxmQTEtvobsr2NS_k",
+//  authDomain: "form-alteru.firebaseapp.com",
+//  projectId: "form-alteru",
+//  storageBucket: "form-alteru.appspot.com",
+//  messagingSenderId: "707297274773",
+//  appId: "1:707297274773:web:71022a5b626c03b857649c"
+//
+//});
+//
+//export const auth = getAuth(firebaseApp);
+//onAuthStateChanged(auth, user => { if (user  == null){
+//  console.log('logged in!');
+//
+//} else{
+//  console.log('no user');
+//}
+//});
+//export const db = getFirestore(firebaseApp);
+
+import { getAnalytics } from "firebase/analytics";
+import { initializeApp } from "firebase/app";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { collection, getDocFromCache, doc, getDocs, getFirestore, setDoc } from "firebase/firestore";
+import { uuid } from 'uuidv4';
+
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseApp = initializeApp({
-    
-  apiKey: "AIzaSyBLDipkFW9mASvbQzcRRaSL5ENKc5eIFqo",
-  authDomain: "form-register-59789.firebaseapp.com",
-  projectId: "form-register-59789",
-  storageBucket: "form-register-59789.appspot.com",
-  messagingSenderId: "20280864206",
-  appId: "1:20280864206:web:254fcaa9c711f4834f4f9f"    
-
-});
+    apiKey: "AIzaSyCsYlP2yma4hXdxhowxmQTEtvobsr2NS_k",
+    authDomain: "form-alteru.firebaseapp.com",
+    databaseURL: "https://form-alteru-default-rtdb.firebaseio.com",
+    projectId: "form-alteru",
+    storageBucket: "form-alteru.appspot.com",
+    messagingSenderId: "707297274773",
+    appId: "1:707297274773:web:71022a5b626c03b857649c"
+  
+  });
 
 export const db = getFirestore();
+
+export function firebaseSignUpUsers(email, password) {
+  createUserWithEmailAndPassword(getAuth(), email, password)
+    .then(credenciales => {
+      // credenciales.user.
+    })
+}
+
+export async function firebaseIniciarSesion(email, password) {
+  try {
+    const credenciales = await signInWithEmailAndPassword(getAuth(), email, password);
+    //credenciales.user
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+export default firebaseIniciarSesion;
+
+export async function firebaseBuscar(coleccionABuscar) {
+  const listado = [];
+  const consulta = collection(getFirestore(), coleccionABuscar);
+  const resultado = await getDocs(consulta);
+  resultado.forEach(documento => {
+    const objeto = documento.data();
+    objeto.id = documento.id;
+    listado.push(objeto);
+  });
+  return listado;
+}
+
+export function firebaseCrear(coleccion, objeto) {
+  objeto.id = uuid();
+  const referencia = doc(getFirestore(), coleccion, objeto.id);
+  setDoc(referencia, objeto);
+}
+
+export  function DocFromCache(coleccion, id) {
+   getDocFromCache(doc(getFirestore(), coleccion, id));
+}
+
+
+
+
